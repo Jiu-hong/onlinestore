@@ -1,65 +1,77 @@
-import Head from 'next/head'
-import styles from '../styles/Home.module.css'
+//import Head from 'next/head';
+//import styles from '../styles/Home.module.css';
+import { useEffect } from 'react';
+import dbConnect from '../utils/dbConnect';
+import Layout from '../components/layout';
+import Item from '../models/item';
+import ItemsInIndex from '../components/itemsInIndex';
+import { useItemsDispatch } from './contexts/ProductsContext';
+import { useUserDispatch, useUser } from './contexts/userContext';
+import { useIns, useInsDispatch } from './contexts/CartContext';
+import { usefunctions } from './contexts/functionContext';
 
-export default function Home() {
-  return (
-    <div className={styles.container}>
-      <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+export default function Index({ items }) {
+    var temp;
+    const { user, tmpuser } = useUser();
+    const { setUser, setTmpuser } = useUserDispatch();
 
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
+    const { setItems, setItemsLen } = useItemsDispatch();
 
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
-        </p>
+    const { instances, inslen } = useIns();
+    const {
+        setInstances,
+        setInsLen,
+        setItemCount,
+        setTotal,
+    } = useInsDispatch();
 
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
+    const { GetAllCarts } = usefunctions();
 
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
+    useEffect(() => {
+        setItemsLen(items.length ? items.length : 0);
+    }, [items]);
 
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className={styles.card}
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
+    useEffect(() => {
+        if (!user) {
+            //set user
+            if (localStorage.getItem('key')) {
+                temp = localStorage.getItem('key');
+            } else {
+                temp = Math.random()
+                    .toString(36)
+                    .replace(/[^a-z]+/g, '')
+                    .substr(0, 12);
+                localStorage.setItem('key', temp);
+            }
+            setTmpuser(temp);
+        }
+    }, [user, tmpuser]);
 
-          <a
-            href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
-        </div>
-      </main>
+    useEffect(() => {
+        var usr = user || tmpuser;
+        usr &&
+            GetAllCarts(usr, setInstances, setInsLen, setItemCount, setTotal);
+    }, [user, tmpuser]);
 
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
-        </a>
-      </footer>
-    </div>
-  )
+    return (
+        <Layout>
+            {/* Create a card for each item */}
+            <div className="card-columns">
+                {items.map((item) => (
+                    <ItemsInIndex item={item} key={item._id} />
+                ))}
+            </div>
+        </Layout>
+    );
+}
+/* Retrieves item(s) data from mongodb database  */
+export async function getStaticProps() {
+    //export async function getServerSideProps() {
+    await dbConnect();
+
+    // find all the data in our database
+    const result = await Item.find({});
+    const items = JSON.parse(JSON.stringify(result));
+
+    return { props: { items: items } };
 }

@@ -1,0 +1,135 @@
+
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+#
+# Committer: Jiuhong <jiuhong8201@Jiuhong8201MacBook-Pro.local>
+#
+# On branch main
+# Your branch is up to date with 'origin/main'.
+#
+# Changes to be committed:
+#	new file:   .babelrc.json
+#	new file:   .prettierrc.json
+#	new file:   components/CartInstances.js
+#	new file:   components/Comment.js
+#	new file:   components/Counter.js
+#	new file:   components/Router.js
+#	new file:   components/ToCheck.js
+#	new file:   components/ToChkInstances.js
+#	new file:   components/bk201125/CartInstances copy .js
+#	new file:   components/bk201125/CartInstances copy.js
+#	new file:   components/bk201125/CartInstances+bk .js
+#	new file:   components/bk201125/CartInstances_bk copy.js
+#	new file:   components/header.js
+#	new file:   components/itemIntro.js
+#	new file:   components/itemsInIndex.js
+#	new file:   components/layout.js
+#	new file:   components/theContents.js
+#	new file:   draft/CartInstances 2.js
+#	new file:   draft/CartInstances.js
+#	new file:   draft/[id].js
+#	new file:   draft/cart.js
+#	new file:   draft/contact.js
+#	new file:   draft/err.html
+#	new file:   draft/imageGallry.js
+#	new file:   draft/itemsInIndex copy.js
+#	new file:   draft/layout.js
+#	new file:   draft/order.js
+#	new file:   draft/order.module.css
+#	new file:   lib/init-middleware.js
+#	new file:   lib/validate-middleware.js
+#	new file:   message.txt
+#	new file:   models/genre.js
+#	new file:   models/item.js
+#	new file:   models/iteminstance.js
+#	new file:   models/owner.js
+#	new file:   models/user.js
+#	new file:   package-lock.json
+#	modified:   package.json
+#	modified:   pages/_app.js
+#	new file:   pages/about.js
+#	new file:   pages/about/about.module.css
+#	new file:   pages/api/del_carts_all.js
+#	new file:   pages/api/getItemInstance.js
+#	new file:   pages/api/getItems.js
+#	deleted:    pages/api/hello.js
+#	new file:   pages/api/owner_createitem_post.js
+#	new file:   pages/api/owner_displayitem_post.js
+#	new file:   pages/api/owner_updateitem_post.js
+#	new file:   pages/api/user_addtocart_post.js
+#	new file:   pages/api/user_changeAddcart_post.js
+#	new file:   pages/api/user_changetocart_post.js
+#	new file:   pages/api/user_chckout_post.js
+#	new file:   pages/api/user_chkchg_post.js
+#	new file:   pages/api/user_comment_post.js
+#	new file:   pages/api/user_deleteins_post.js
+#	new file:   pages/api/user_getallcart_post.js
+#	new file:   pages/api/user_logon_post.js
+#	new file:   pages/api/user_order_post.js
+#	new file:   pages/api/user_register_post.js
+#	new file:   pages/api/user_tochck_post.js
+#	new file:   pages/api/validationBody.js
+#	new file:   pages/cart.js
+#	new file:   pages/cart/checkout.js
+#	new file:   pages/cart/checkout.module.css
+#	new file:   pages/contact.js
+#	new file:   pages/contact/contact.module.css
+#	new file:   pages/contexts/CartContext copy.js
+#	new file:   pages/contexts/CartContext.js
+#	new file:   pages/contexts/ProductsContext.js
+#	new file:   pages/contexts/functionContext.js
+#	new file:   pages/contexts/initialContext.js
+#	new file:   pages/contexts/userContext.js
+#	new file:   pages/draft.txt
+#	new file:   pages/index copy.js
+#	modified:   pages/index.js
+#	new file:   pages/login.js
+#	new file:   pages/order.js
+#	new file:   pages/register.js
+#	new file:   pages/store/[id].js
+#	new file:   pages/store/[id]/comment.js
+#	new file:   pages/store/index.js
+#	new file:   public/bedtime.icon
+#	new file:   public/comment/andreas-weiland-TMpqNhMunQY-unsplash.jpg
+#	new file:   public/comment/brooke-lark-8beTH4VkhLI-unsplash.jpg
+#	new file:   public/comment/faria-anzum-ONK9IlKizS4-unsplash.jpg
+#	new file:   public/comment/ian-dooley-TLD6iCOlyb0-unsplash.jpg
+#	new file:   public/comment/jelleke-vanooteghem-wzOyUkuLy7E-unsplash.jpg
+#	new file:   public/comment/jonatan-pie-xgTMSz6kegE-unsplash.jpg
+#	new file:   public/comment/lemon.jpg
+#	new file:   public/comment/lemon2.jpg
+#	new file:   public/comment/lemon3.jpg
+#	new file:   public/comment/michelle-tsang-VTt_Jn1LrOg-unsplash.jpg
+#	new file:   public/comment/sheri-silver-5A0O12BIsjY-unsplash.jpg
+#	new file:   public/comment/waranya-mooldee-Efj0HGPdPKs-unsplash.jpg
+#	new file:   public/item/andreas-weiland-TMpqNhMunQY-unsplash.jpg
+#	new file:   public/item/brooke-lark-8beTH4VkhLI-unsplash.jpg
+#	new file:   public/item/faria-anzum-ONK9IlKizS4-unsplash.jpg
+#	new file:   public/item/ian-dooley-TLD6iCOlyb0-unsplash.jpg
+#	new file:   public/item/jelleke-vanooteghem-wzOyUkuLy7E-unsplash.jpg
+#	new file:   public/item/jonatan-pie-xgTMSz6kegE-unsplash.jpg
+#	new file:   public/item/lemon.jpg
+#	new file:   public/item/lemon2.jpg
+#	new file:   public/item/lemon3.jpg
+#	new file:   public/item/michelle-tsang-VTt_Jn1LrOg-unsplash.jpg
+#	new file:   public/item/sheri-silver-5A0O12BIsjY-unsplash.jpg
+#	new file:   public/item/waranya-mooldee-Efj0HGPdPKs-unsplash.jpg
+#	new file:   public/uploads/0fec1a5414eecd7c7f3213d41204d491
+#	new file:   public/uploads/16ca2b86f1f6c94a08a3ca363cddeec7
+#	new file:   public/uploads/1ea5055277b39956f5273440f490b0e6
+#	new file:   public/uploads/574fdeadd8bbb224b201fe48884c2491
+#	new file:   public/uploads/6d24b02bfe7e19cccb870933a2126816
+#	new file:   public/uploads/70956710e9bc8b2170f399b06a37027b
+#	new file:   public/uploads/7da9c650ff9470b29c3744ec25f40032
+#	new file:   public/uploads/a85d80c63408b875831243df7c2e6992
+#	new file:   public/uploads/af4eabcc70cc7a9a9681c6b8b1f11e39
+#	new file:   public/uploads/e8399f20b49df9d0d5303298d1e7f977
+#	new file:   styles/cart.module.css
+#	new file:   styles/comment.module.css
+#	modified:   styles/globals.css
+#	new file:   styles/index.module.css
+#	new file:   styles/order.module.css
+#	new file:   styles/store.module.css
+#	new file:   utils/dbConnect.js
+#	new file:   utils/utils.js
+#

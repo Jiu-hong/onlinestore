@@ -1,0 +1,170 @@
+.gridcontainer {
+    display: grid;
+    width: 100%;
+    grid-template-columns: 1fr 1fr;
+}
+.poem {
+    font-style: italic;
+    padding: 0 30% 0 30%;
+}
+.price {
+    font-size: 120%;
+    color: #b12704;
+}
+.pre {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    text-align: justify;
+}
+
+.description {
+    color: #565959;
+}
+.inputwraper {
+    width: 58px;
+    height: 44px;
+    overflow: hidden;
+    border: 1px solid #ccc;
+    position: relative;
+    margin-right: 10px;
+    float: left;
+}
+.table {
+    border-collapse: collapse;
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: 1rem;
+    background-color: transparent;
+    table-layout: fixed;
+}
+.table th {
+    vertical-align: top;
+    border-top: 1px solid #dee2e6;
+    word-wrap: break-word;
+    text-align: start;
+    font-style: italic;
+}
+.table td {
+    padding: 0.75rem;
+    vertical-align: top;
+    border-top: 1px solid #dee2e6;
+    word-wrap: break-word;
+}
+.comment {
+    width: 90%;
+    font-style: italic;
+
+    word-wrap: break-word;
+}
+.add {
+    padding: 0;
+    display: block;
+    width: 15px;
+    text-align: center;
+    height: 22px;
+    line-height: 22px;
+    overflow: hidden;
+    background: #f1f1f1;
+    color: #666;
+    position: absolute;
+    top: -1px;
+    right: -1px;
+    border: 1px solid #ccc;
+}
+
+.minus {
+    padding: 0;
+    display: block;
+    width: 15px;
+    text-align: center;
+    height: 22px;
+    line-height: 22px;
+    overflow: hidden;
+    background: #f1f1f1;
+    color: #666;
+    position: absolute;
+    bottom: -1px;
+    right: -1px;
+    border: 1px solid #ccc;
+    border-top: 0;
+}
+
+.input {
+    font-size: small;
+    display: block;
+    width: 43px;
+    height: 42px;
+    line-height: 42px;
+    position: absolute;
+    top: 1px;
+    left: 0;
+    border: none;
+    border: 0;
+    text-align: center;
+}
+
+.btnaddtocart {
+    width: 138px;
+    height: 44px;
+    overflow: hidden;
+    border: 1px solid #ccc;
+    position: relative;
+    margin-right: 10px;
+    float: left;
+}
+
+.tab {
+    border: none;
+    flex: 1;
+    /*color: whitesmoke;*/
+    color: #28a745;
+    background-color: #d4edda;
+}
+.tabactive {
+    border: none;
+    flex: 1;
+    background-color: #28a745;
+    color: white;
+}
+
+/* Next & previous buttons */
+.prev,
+.next {
+    position: relative;
+    cursor: pointer;
+    color: #28a745;
+    margin-bottom: 1%;
+    border-radius: 3px 0 0 3px;
+    background-color: #d4edda;
+}
+.p {
+    margin-top: 10px;
+}
+/*  position: absolute;
+    width: 20px;
+    padding: 6px;
+    margin-top: 0px;
+    /* margin-left: -25px;
+    left: 0;
+    color: white;
+    font-weight: bold;
+    font-size: 20px;
+    border-radius: 0 3px 3px 0;
+    user-select: none;
+    -webkit-user-select: none;
+}
+*/
+/* Position the "next button" to the right */
+.next {
+    border-radius: 0 3px 3px 0;
+}
+
+.prev:hover,
+.next:hover {
+    color: white;
+    background-color: #28a745;
+}
+
+.hidden {
+    display: none;
+}

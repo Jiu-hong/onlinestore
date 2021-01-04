@@ -1,0 +1,56 @@
+<div className="col d-flex ">
+                                        <div>
+                                            <Link
+                                                href="/store/[id]"
+                                                as={`store/${order.item._id}`}
+                                            >
+                                                <a className="btn btn-link btn-sm mr-2">
+                                                    <Image
+                                                        src={`/${order.item.image}`}
+                                                        height={70}
+                                                        width={70}
+                                                    />
+                                                </a>
+                                            </Link>
+                                        </div>
+                                        <div className="align-self-center mr-2">
+                                            <Link
+                                                href="/store/[id]"
+                                                as={`store/${order.item._id}`}
+                                            >
+                                                <a className="btn btn-link btn-sm  ">
+                                                    {order.item.title}
+                                                </a>
+                                            </Link>
+                                        </div>
+
+                                        <div className=" align-self-center mr-2">
+                                            unit price:{' '}
+                                            {formatNumber(order.item.price)}
+                                        </div>
+
+                                        <div className="align-self-center mr-3">
+                                            quantity: {order.quantity}
+                                        </div>
+                                    </div>
+
+
+
+  <Router>
+                                                        <span className="mr-3">
+                                                            <ReactLink
+                                                                to={`/${order.item._id}/comment`}
+                                                            >
+                                                                Comment
+                                                            </ReactLink>
+                                                        </span>
+                                                        <Switch>
+                                                            <Route
+                                                                path="/:id/comment"
+                                                                children={
+                                                                    <Comment />
+                                                                }
+                                                            />
+                                                            <Route path="/order" />
+                                                        </Switch>
+                                                    </Router>
