@@ -2,7 +2,7 @@ import ItemInstance from '../../models/iteminstance';
 import dbConnect from '../../utils/dbConnect';
 
 import formidable from 'formidable';
-import fs from 'fs';
+import fs, { readdirSync } from 'fs';
 import path from 'path';
 
 import validator from 'validator';
@@ -86,6 +86,9 @@ export default async function handler(req, res) {
                     'path.parse(process.cwd()).root in user_comment_post.js: ',
                     path.parse(process.cwd()).root
                 );
+                var dirs = readdirSync(process.cwd());
+                console.log('dirs: ', dirs);
+
                 fs.renameSync(oldPath, newPath);
                 newPath = '/' + newPath.split('/').slice(1).join('/');
 
