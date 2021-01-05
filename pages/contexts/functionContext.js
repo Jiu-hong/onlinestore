@@ -308,7 +308,7 @@ const AddToCart = (parmscount, parmsid, parmsuser, fnins, fnlen, fnc, fnt) => {
 
             const reducer = (accumulator, currentValue) =>
                 accumulator + currentValue.quantity;
-            var inslen = newins_cart.reduce(reducer, 0);
+            var inslen = newins_cart ? newins_cart.reduce(reducer, 0) : 0;
             fnlen(inslen);
 
             var { itemCount, total } = sumItems(newins_cart);
