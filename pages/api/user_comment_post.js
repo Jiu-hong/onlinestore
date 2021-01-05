@@ -3,6 +3,7 @@ import dbConnect from '../../utils/dbConnect';
 
 import formidable from 'formidable';
 import fs from 'fs';
+import path from 'path';
 
 import validator from 'validator';
 
@@ -59,8 +60,12 @@ export default async function handler(req, res) {
                 newPath = '/comment/' + file[i].name;
                 console.log('newPath: ', newPath);
                 console.log(
-                    'process.cwd(). in user_comment_post.js: ',
+                    'path.parse(process.cwd()).root in user_comment_post.js: ',
                     process.cwd()
+                );
+                console.log(
+                    'path.parse(process.cwd()).root in user_comment_post.js: ',
+                    path.parse(process.cwd()).root
                 );
                 fs.renameSync(oldPath, newPath);
                 newPath = '/' + newPath.split('/').slice(1).join('/');
@@ -76,6 +81,10 @@ export default async function handler(req, res) {
                 console.log(
                     'process.cwd(). in user_comment_post.js: ',
                     process.cwd()
+                );
+                console.log(
+                    'path.parse(process.cwd()).root in user_comment_post.js: ',
+                    path.parse(process.cwd()).root
                 );
                 fs.renameSync(oldPath, newPath);
                 newPath = '/' + newPath.split('/').slice(1).join('/');
