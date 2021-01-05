@@ -27,6 +27,7 @@ export default async function handler(req, res) {
                     user: req.body.user,
                     status: 'Cart',
                     quantity: req.body.count,
+                    check: true,
                 });
 
                 return iteminstance
