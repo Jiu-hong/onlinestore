@@ -58,6 +58,10 @@ export default async function handler(req, res) {
                 oldPath = file[i].path;
                 newPath = '/comment/' + file[i].name;
                 console.log('newPath: ', newPath);
+                console.log(
+                    'process.cwd(). in user_comment_post.js: ',
+                    process.cwd()
+                );
                 fs.renameSync(oldPath, newPath);
                 newPath = '/' + newPath.split('/').slice(1).join('/');
 
@@ -67,7 +71,12 @@ export default async function handler(req, res) {
             if (file.size !== 0) {
                 oldPath = file.path;
                 newPath = '/comment/' + file.name;
+
                 console.log('newPath: ', newPath);
+                console.log(
+                    'process.cwd(). in user_comment_post.js: ',
+                    process.cwd()
+                );
                 fs.renameSync(oldPath, newPath);
                 newPath = '/' + newPath.split('/').slice(1).join('/');
 
