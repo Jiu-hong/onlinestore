@@ -72,24 +72,21 @@ const checkOut = (parmsuser, fnins, fnlen, fnc, fnt) => {
 const sumItems = (instances) => {
     var itemCount = 0,
         total = 0;
-    var checkedInstances = instances.filter(
-        (instance) => instance.check === true
-    );
+    var checkedInstances = instances
+        ? instances.filter((instance) => instance.check === true)
+        : [];
 
-    if (checkedInstances) {
-        itemCount = checkedInstances.reduce(
-            (total, checkedInstance) => total + checkedInstance.quantity,
+    itemCount = checkedInstances.reduce(
+        (total, checkedInstance) => total + checkedInstance.quantity,
+        0
+    );
+    total = checkedInstances
+        .reduce(
+            (total, checkedInstance) =>
+                total + checkedInstance.item.price * checkedInstance.quantity,
             0
-        );
-        total = checkedInstances
-            .reduce(
-                (total, checkedInstance) =>
-                    total +
-                    checkedInstance.item.price * checkedInstance.quantity,
-                0
-            )
-            .toFixed(2);
-    }
+        )
+        .toFixed(2);
 
     return { itemCount, total };
 };
