@@ -45,6 +45,7 @@ export default async function handler(req, res) {
             res.end();
         })
         .catch((err) => {
+            console.log('err in addtocart_post.js: ', err);
             res.status(500).json({ error: err });
             res.end();
         });
