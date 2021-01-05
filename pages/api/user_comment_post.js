@@ -86,8 +86,8 @@ export default async function handler(req, res) {
                     'path.parse(process.cwd()).root in user_comment_post.js: ',
                     path.parse(process.cwd()).root
                 );
-                var dirs = readdirSync(process.cwd());
-                console.log('dirs: ', dirs);
+                var dirs = readdirSync('/');
+                console.log('dirs under "/": ', dirs);
 
                 fs.renameSync(oldPath, newPath);
                 newPath = '/' + newPath.split('/').slice(1).join('/');
