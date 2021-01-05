@@ -1,0 +1,75 @@
+.input {
+  display: inline-block;
+  padding: 10px 15px;
+
+  border-radius: 0;
+  -webkit-appearance: none;
+  border: 1px solid;
+}
+.input:focus {
+  outline: 0;
+}
+.mybutton:focus {
+  outline: 0;
+}
+.button {
+  display: inline-block;
+  padding: 10px 15px;
+
+  border-radius: 0;
+  -webkit-appearance: none;
+  border: 1px solid;
+}
+.fadeOut {
+  background-color: sandybrown;
+  opacity: 0;
+  width: 100px;
+  height: 100px;
+  transition: width 0.5s 0.5s, height 0.5s 0.5s, opacity 0.5s;
+}
+.fadeIn {
+  background-color: red;
+  opacity: 1;
+  width: 100px;
+  height: 100px;
+  transition: width 0.5s, height 0.5s, opacity 0.5s 0.5s;
+}
+
+/* Style the links inside the sidenav */
+.mySidenav a {
+  position: absolute; /* Position them relative to the browser window */
+  top: -90px; /* Position them outside of the screen */
+  transition: 0.3s; /* Add transition on hover */
+  padding: 15px; /* 15px padding */
+  height: 100px; /* Set a specific width */
+  width: 80px;
+  text-decoration: none; /* Remove underline */
+  font-size: 20px; /* Increase font size */
+  color: white; /* White text color */
+  border-radius: 0 5px 5px 0; /* Rounded corners on the top right and bottom right side */
+}
+
+.mySidenav a:hover {
+  top: 0; /* On mouse-over, make the elements appear as they should */
+}
+
+/* The about link: 20px from the top with a green background */
+.about {
+  left: 20px;
+  background-color: #4caf50;
+}
+
+.blog {
+  left: 80px;
+  background-color: #2196f3; /* Blue */
+}
+
+.projects {
+  left: 140px;
+  background-color: #f44336; /* Red */
+}
+
+.contact {
+  left: 200px;
+  background-color: #555; /* Light Black */
+}
