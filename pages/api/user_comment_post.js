@@ -56,8 +56,8 @@ export default async function handler(req, res) {
             // var filestodb = [];
             for (let i = 0; i < file.length; i++) {
                 oldPath = file[i].path;
-                newPath = 'public/comment/' + file[i].name;
-
+                newPath = '/comment/' + file[i].name;
+                console.log('newPath: ', newPath);
                 fs.renameSync(oldPath, newPath);
                 newPath = '/' + newPath.split('/').slice(1).join('/');
 
@@ -66,7 +66,8 @@ export default async function handler(req, res) {
         } else {
             if (file.size !== 0) {
                 oldPath = file.path;
-                newPath = 'public/comment/' + file.name;
+                newPath = '/comment/' + file.name;
+                console.log('newPath: ', newPath);
                 fs.renameSync(oldPath, newPath);
                 newPath = '/' + newPath.split('/').slice(1).join('/');
 
@@ -77,7 +78,6 @@ export default async function handler(req, res) {
         }
 
         ItemInstance.findByIdAndUpdate(validatedinsid, {
-            ordernumber: 'test123',
             commenttext: validatedtext,
             commentimage: filearray,
         })
