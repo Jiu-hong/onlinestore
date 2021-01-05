@@ -1,4 +1,5 @@
 import ItemInstance from '../../models/iteminstance';
+import Item from '../../models/item';
 import dbConnect from '../../utils/dbConnect';
 
 export const config = {
