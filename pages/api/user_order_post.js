@@ -23,6 +23,7 @@ export default async function handler(req, res) {
     }
 
     if (errors.length > 0) {
+        console.log('errors: ', errors);
         res.status(500).json({ error: errors, status: 500 });
         res.end();
         return;
@@ -31,7 +32,7 @@ export default async function handler(req, res) {
     ItemInstance.find({ user: validateduser, status: 'Checkout' })
         .populate('item')
         .then((items_order) => {
-            // console.log('items_order in user_order_post: ', items_order);
+            console.log('items_order in user_order_post: ', items_order);
             function groupBy(objectArray, property) {
                 return objectArray.reduce(function (acc, obj) {
                     let key = obj[property];
