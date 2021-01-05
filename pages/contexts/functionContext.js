@@ -70,21 +70,26 @@ const checkOut = (parmsuser, fnins, fnlen, fnc, fnt) => {
 };
 
 const sumItems = (instances) => {
+    var itemCount = 0,
+        total = 0;
     var checkedInstances = instances.filter(
         (instance) => instance.check === true
     );
 
-    let itemCount = checkedInstances.reduce(
-        (total, checkedInstance) => total + checkedInstance.quantity,
-        0
-    );
-    let total = checkedInstances
-        .reduce(
-            (total, checkedInstance) =>
-                total + checkedInstance.item.price * checkedInstance.quantity,
+    if (checkedInstances) {
+        itemCount = checkedInstances.reduce(
+            (total, checkedInstance) => total + checkedInstance.quantity,
             0
-        )
-        .toFixed(2);
+        );
+        total = checkedInstances
+            .reduce(
+                (total, checkedInstance) =>
+                    total +
+                    checkedInstance.item.price * checkedInstance.quantity,
+                0
+            )
+            .toFixed(2);
+    }
 
     return { itemCount, total };
 };
@@ -243,6 +248,10 @@ const ChangeToCart = (
             var inslen = ins_cart.reduce(reducer, 0);
             fnlen(inslen);
 
+            console.log(
+                'ins_cart in user_changetocart_post before sumItems: ',
+                ins_cart
+            );
             var { itemCount, total } = sumItems(ins_cart);
             fnc(itemCount);
             fnt(total);
