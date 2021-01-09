@@ -1,47 +1,144 @@
-import Layout from '../components/layout';
+import { useState, useRef } from 'react';
+import Image from 'next/image';
+export default function Upload() {
+  const [src, setSrc] = useState('');
+  var fileArray = [];
 
-export default function About() {
-    return (
-        <Layout>
-            <div className="container">
-                <p>Name: Jiuhong Sun</p>
+  const refForm = useRef(null);
+  const refFile = useRef(null);
+  const uploadPhoto = async (e) => {
+    const file = e.target.files[0];
+    // const file = e.target.files;
+    const filename = encodeURIComponent(file.name);
+    const res = await fetch(`/api/upload-url?file=${filename}`);
+    const { url, fields } = await res.json();
+    console.log('url: ', url);
+    console.log('fields: ', fields);
+    const formData = new FormData();
 
-                <p>
-                    Tel: <a href="tel:+86 18940960582">+86 18940960582</a>
-                </p>
-                <p>
-                    Email:{' '}
-                    <a href="mailto:jiu.hong.sun@gmail.com">
-                        jiu.hong.sun@gmail.com
-                    </a>
-                </p>
-            </div>
-        </Layout>
-    );
-}
-/*
-export async function getServerSideProps(req, res) {
-    //export async function getServerSideProps() {
-    await dbConnect();
+    Object.entries({ ...fields, file }).forEach(([key, value]) => {
+      console.log('key: ', key);
+      console.log('value: ', value);
+      formData.append(key, value);
+    });
+    console.log('formData: ', formData);
+    fetch(url, {
+      method: 'POST',
+      body: formData,
+    }).then((result) => console.log('result: ', result));
 
-    /* var ordernumber = Math.floor(new Date().valueOf() + Math.random());
+    /*if (upload.ok) {
+      console.log('Uploaded successfully!');
+    } else {
+      console.error('Upload failed.');
+    }*/
+  };
 
-    /* find all the data in our database
-    ItemInstance.find({ _id: '5ff2f7b095a705a5af4d6eba' })
-        .then((items_cart) => console.log('items_cart: ', items_cart))
-        .catch((err) => console.log('err: ', err));
-    var order = new Order({
-        ordernumber: ordernumber,
-        itemInstances: ['5ff2f7b095a705a5af4d6eba', '5ff2f7b095a705a5af4d6eba'],
-        user: 'qbmdqff',
-        buy_date: Date.now(),
+  const handleFile = (e) => {
+    e.preventDefault();
+
+    for (let i = 0; i < refFile.current.files.length; i++) {
+      fileArray.push(refFile.current.files[i]);
+    }
+    fileArray.map((file) => {
+      const filename = encodeURIComponent(file.name);
+      fetch(`/api/upload-url?file=${filename}`)
+        .then((res) => res.json())
+        .then(({ url, fields }) => {
+          console.log('url: ', url);
+          console.log('fields: ', fields);
+          const formData = new FormData();
+
+          Object.entries({ ...fields, file }).forEach(([key, value]) => {
+            formData.append(key, value);
+          });
+
+          fetch(url, {
+            method: 'POST',
+            body: formData,
+          }).then((result) => console.log('result: ', result));
+        });
+    });
+  };
+
+  const uploadPhototoG = async (e) => {
+    const file = e.target.files[0];
+    const filename = encodeURIComponent(file.name);
+    const res = await fetch(`/api/uploadg-url?file=${filename}`);
+    const { url, fields } = await res.json();
+    const formData = new FormData();
+
+    Object.entries({ ...fields, file }).forEach(([key, value]) => {
+      formData.append(key, value);
     });
 
-    await order.save().then((result) => console.log('result: ', result));
+    const upload = await fetch(url, {
+      method: 'POST',
+      body: formData,
+    });
 
-    Order.find({ ordernumber: ordernumber })
-        .populate('itemInstances')
-        .then((result) => console.log('resultpopulate: ', result));
+    if (upload.ok) {
+      console.log('Uploaded successfully!');
+    } else {
+      console.error('Upload failed.');
+    }
+  };
 
-    return { props: { items: 'items' } };
-}*/
+  const cors = async () => {
+    const res = await fetch(`/api/CORS`);
+    console.log('res: ', res);
+  };
+
+  const handleResize = (e) => {
+    e.preventDefault();
+    setSrc(
+      // 's3://redbirdbucket-resized/resized-brooke-lark-8beTH4VkhLI-unsplash.jpg'
+      'https://s3.amazonaws.com/redbirdbucket-resized/resized-lemon.jpg'
+    );
+  };
+  return (
+    <>
+      <hr />
+      <label>
+        upload to google
+        <input
+          onChange={uploadPhototoG}
+          type='file'
+          accept='image/png, image/jpeg'
+        />
+      </label>
+      <hr />
+      <label>
+        original
+        <input onChange={uploadPhoto} type='file' />
+      </label>
+      <hr />
+      <form ref={refForm} className='form container'>
+        <label>
+          {' '}
+          upload files
+          <input
+            ref={refFile}
+            className='form-control'
+            //  onChange={uploadPhoto}
+            type='file'
+            accept='image/png, image/jpeg'
+            multiple
+          />
+        </label>
+        <br />
+        <button className='btn btn-primary' onClick={handleFile}>
+          click
+        </button>
+        <hr />
+        {src && <Image src={src} width={60} height={60} />}
+        <button className='btn btn-primary' onClick={handleResize}>
+          get resized file
+        </button>
+        <hr />
+        <button onClick={cors}>cors</button>
+      </form>
+      <hr />
+    </>
+  );
+}
