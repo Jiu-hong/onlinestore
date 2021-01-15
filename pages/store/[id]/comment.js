@@ -27,7 +27,6 @@ function TempImg1({ i, imgfile, flag, show }) {
   URL.revokeObjectURL(imgfile);
 
   const handledlt = (e) => {
-    console.log('sym in handledlt: ', sym);
     e.preventDefault();
     flag[i] = !flag[i];
     setSym(flag[i]);
@@ -35,14 +34,14 @@ function TempImg1({ i, imgfile, flag, show }) {
   return (
     <>
       {show && dlt && (
-        <div className='mr-3'>
-          <img src={imgurl} width={50} height={50} className='mr-3 mb-3' />
-          <span className='text-danger'>size exceeded, it will not upload</span>
+        <div className="mr-3">
+          <img src={imgurl} width={50} height={50} className="mr-3 mb-3" />
+          <span className="text-danger">size exceeded, it will not upload</span>
         </div>
       )}
       {show && !dlt && (
-        <div className='mr-3'>
-          <img src={imgurl} width={50} height={50} className='mr-3 mb-3' />
+        <div className="mr-3">
+          <img src={imgurl} width={50} height={50} className="mr-3 mb-3" />
 
           <button
             className={sym ? 'btn btn-sm btn-success' : 'btn btn-sm btn-danger'}
@@ -82,7 +81,6 @@ export default function Comment() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('I am in handleSubmit imgurlfordb: ', imgurlfordb);
     var usr = user || tmpuser;
 
     PostComment(
@@ -103,14 +101,14 @@ export default function Comment() {
         //router.push(`/order/#${ins._id}`);
         router.back();
       } else {
-        console.log('res in else in comment: ', res);
+        console.log('result failure in comment: ', res);
       }
     });
   };
 
   const handletmpimg = (e) => {
     setImgurlfordb([]);
-    var length = e.target.files.length > 5 ? 5 : e.target.files.length;
+    var length = e.target.files.length > 3 ? 3 : e.target.files.length;
     var flag = [];
     var img = [];
     for (let i = 0; i < length; i++) {
@@ -136,13 +134,10 @@ export default function Comment() {
     var imgurls = [];
 
     for (let i = 0; i < imgEL.current.files.length; i++) {
-      console.log('cflag[i]: ', cflag[i]);
       if (cflag[i]) {
         fileArray.push(imgEL.current.files[i]);
       }
     }
-
-    console.log('fileArray: ', fileArray);
 
     fileArray.map((file) => {
       const filename = encodeURIComponent(file.name);
@@ -153,8 +148,6 @@ export default function Comment() {
 
           Object.entries({ ...fields, file }).forEach(([key, value]) => {
             formData.append(key, value);
-            console.log('key: ', key);
-            console.log('value: ', value);
           });
 
           fetch(url, {
@@ -163,7 +156,6 @@ export default function Comment() {
           })
             .then((result) => {
               if (result.ok) {
-                console.log('result: ', result);
                 imgurls.push(result.url + '/' + 'comment/' + file.name);
                 setImgurlfordb(imgurls);
                 if (fileArray.length === imgurls.length) {
@@ -181,7 +173,7 @@ export default function Comment() {
   return (
     <Layout>
       {ins && (
-        <div className='container-fluid mt-3'>
+        <div className="container-fluid mt-3">
           <div className={styles.gridcontainer}>
             <div>
               <Image src={ins.item.image[0]} height={70} width={70} />
@@ -197,7 +189,7 @@ export default function Comment() {
             <div>
               <div className={styles.oldtitle}>Original Comment</div>
               <div>{ins.commenttext}</div>
-              <div className='mt-3'>
+              <div className="mt-3">
                 {ins.commentimage.map((imgfile, index) => (
                   <img key={index} src={imgfile} height={50} width={50} />
                 ))}
@@ -207,8 +199,12 @@ export default function Comment() {
           <hr />
           <form onSubmit={handleSubImg}>
             <div className={styles.title}>
-              Image(s) preview <span className='ml-3'> {uploadmg}</span>
+              Image(s) preview.
+              <span className="ml-3"> {uploadmg}</span>
             </div>
+            <p className="text-warning">
+              Please do Not exceed 3 files. Each file does Not exceed 1M.
+            </p>
             {imgfiles.map((imgfile, index) => (
               <TempImg1
                 key={index}
@@ -218,22 +214,22 @@ export default function Comment() {
                 show={show}
               />
             ))}
-            <div className='custom-file'>
-              <label className='custom-file-label'>
+            <div className="custom-file">
+              <label className="custom-file-label">
                 Select image(s) for preview
                 <input
                   ref={imgEL}
                   onChange={handletmpimg}
-                  name='commentattach'
-                  type='file'
-                  className='file-control-file'
+                  name="commentattach"
+                  type="file"
+                  className="file-control-file"
                   hidden
                   multiple
                 />
               </label>
               <p>click</p>
               <div>
-                <button className='btn btn-success mr-3'>Upload</button>
+                <button className="btn btn-success mr-3">Upload</button>
                 <span>
                   {imgurlfordb.map((url) => (
                     <img src={url} width={50} height={50} />
@@ -245,24 +241,24 @@ export default function Comment() {
           <form
             //    ref={formEL}
             onSubmit={handleSubmit}
-            method='post'
+            method="post"
             //   encType='multipart/form-data'
           >
             {error && <p style={{ color: 'red' }}>{error}</p>}
             <div className={styles.title}>New Comment (15-500 characters)</div>
 
             <textarea
-              name='textarea'
+              name="textarea"
               ref={textEL}
-              className='form-control mb-3 mt-3'
-              rows='5'
+              className="form-control mb-3 mt-3"
+              rows="5"
               required
-              minLength='15'
-              maxLength='500'
+              minLength="15"
+              maxLength="500"
             ></textarea>
 
-            <button className='btn btn-success mr-3'>submit</button>
-            <button className='btn btn-warning mr-3' onClick={handleCancel}>
+            <button className="btn btn-success mr-3">submit</button>
+            <button className="btn btn-warning mr-3" onClick={handleCancel}>
               cancel
             </button>
           </form>

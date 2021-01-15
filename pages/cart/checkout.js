@@ -9,7 +9,7 @@ import styles from './checkout.module.css';
 
 export default function ToCheckOut() {
   const { user, tmpuser } = useUser();
-  var usr = user || tmpuser;
+  var usr = user?.username || tmpuser;
   const router = useRouter();
 
   const { instances, itemCount, total, orders } = useIns();
@@ -35,13 +35,13 @@ export default function ToCheckOut() {
   };
   return (
     <Layout>
-      <div className='container-fluid mt-3'>
+      <div className="container-fluid mt-3">
         {instances &&
           instances.filter((instance) => instance.check === true).length >
             0 && (
-            <div className='mt-3'>
+            <div className="mt-3">
               <div className={styles.title}>
-                <span className='ml-2'>You are going to check out:</span>
+                <span className="ml-2">You are going to check out:</span>
               </div>
 
               {instances
@@ -54,22 +54,22 @@ export default function ToCheckOut() {
                     />
                   );
                 })}
-              <div className='container'>
-                <div className='row'>
-                  <div className='col-sm-3'>Total count: {itemCount}</div>
-                  <div className=' col-sm-3'>
+              <div className="container">
+                <div className="row">
+                  <div className="col-sm-3">Total count: {itemCount}</div>
+                  <div className=" col-sm-3">
                     Total price: {formatNumber(total)}
                   </div>
 
                   <button
-                    className='btn btn-danger btn col-sm-2'
+                    className="btn btn-danger btn col-sm-2"
                     onClick={handleCancel}
                   >
                     cancel
                   </button>
-                  <div className='col-sm-2'></div>
+                  <div className="col-sm-2"></div>
                   <button
-                    className='btn btn-success col-sm-2'
+                    className="btn btn-success col-sm-2"
                     onClick={handleChkOut}
                   >
                     confirm

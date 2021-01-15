@@ -125,7 +125,6 @@ const ChgChk = (
     .then((response) => response.json())
     .then((result) => {
       if (result.status === 201) {
-        console.log('result.data: ', result.data);
         var newins = result.data;
         var index = ins_cart.findIndex((oldins) => oldins._id === newins._id);
 

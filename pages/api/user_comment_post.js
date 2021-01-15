@@ -1,10 +1,6 @@
 import ItemInstance from '../../models/iteminstance';
 import dbConnect from '../../utils/dbConnect';
 
-import formidable from 'formidable';
-import fs, { readdirSync } from 'fs';
-import path from 'path';
-
 import validator from 'validator';
 
 export const config = {
@@ -14,9 +10,8 @@ export const config = {
 };
 
 export default async function handler(req, res) {
-  console.log('I am in user_comment_post');
   req.body = JSON.parse(req.body);
-  console.log('req.body: ', req.body);
+
   var validatedcomment, validatedinsid;
   var errors = [];
   await dbConnect();
@@ -52,7 +47,6 @@ export default async function handler(req, res) {
   })
     .populate('item')
     .then((items_comment) => {
-      console.log('items_comment: ', items_comment);
       res.status(201).json({ status: 201, data: items_comment });
       res.end();
     })

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import Link from 'next/link';
+
 import Layout from '../components/layout';
 import CartInstances from '../components/CartInstances';
 import { useUserDispatch, useUser } from './contexts/userContext';
@@ -13,8 +13,8 @@ import { useRouter } from 'next/router';
 export default function Cart() {
   var temp;
   const router = useRouter();
-  const { user, tmpuser } = useUser();
-  const { setUser, setTmpuser } = useUserDispatch();
+  const { user, isAuthenticated, tmpuser } = useUser();
+  const { setTmpuser } = useUserDispatch();
   const [visible, setVisible] = useState(false);
 
   const { instances, itemCount, total } = useIns();
@@ -22,8 +22,7 @@ export default function Cart() {
   const { GetAllCarts } = usefunctions();
 
   useEffect(() => {
-    console.log('usr in cart: ', user);
-    if (!user) {
+    if (!isAuthenticated) {
       //set user
       if (localStorage.getItem('key')) {
         temp = localStorage.getItem('key');
@@ -40,7 +39,8 @@ export default function Cart() {
   }, [user, tmpuser]);
 
   useEffect(() => {
-    var usr = user || tmpuser;
+    var usr = user?.username || tmpuser;
+
     usr && GetAllCarts(usr, setInstances, setInsLen, setItemCount, setTotal);
   }, [user, tmpuser]);
 
@@ -59,7 +59,7 @@ export default function Cart() {
   };
   return (
     <Layout>
-      <div className='container-fluid mt-3'>
+      <div className="container-fluid mt-3">
         {instances &&
           instances.map((iteminstance) => {
             return (
@@ -71,15 +71,15 @@ export default function Cart() {
           })}
         {(!instances || instances.length == 0) && <div>Empty cart</div>}
         {instances && instances.length > 0 && (
-          <div className='container'>
-            <div className='row'>
-              <div className='col-md-2 col-sm-0'></div>
-              <div className='col-md-3 col-sm-4'>Total count: {itemCount}</div>
-              <div className='col-md-3 col-sm-4'>
+          <div className="container">
+            <div className="row">
+              <div className="col-md-2 col-sm-0"></div>
+              <div className="col-md-3 col-sm-4">Total count: {itemCount}</div>
+              <div className="col-md-3 col-sm-4">
                 Total price: {formatNumber(total)}
               </div>
               <button
-                className='col-md-2 col-sm-4 btn btn-success'
+                className="col-md-2 col-sm-4 btn btn-success"
                 onClick={handleCheckout}
               >
                 <span

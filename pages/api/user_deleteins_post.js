@@ -4,38 +4,37 @@ import dbConnect from '../../utils/dbConnect';
 import validator from 'validator';
 
 export const config = {
-    api: {
-        externalResolver: true,
-    },
+  api: {
+    externalResolver: true,
+  },
 };
 
 export default async function handler(req, res) {
-    req.body = JSON.parse(req.body);
-    console.log('req.body: ', req.body);
-    var errors = [];
-    var validatedinsid;
-    await dbConnect();
+  req.body = JSON.parse(req.body);
 
-    if (validator.isEmpty(validator.trim(req.body.insid))) {
-        errors.push(' The insid is empty');
-    } else {
-        validatedinsid = validator.escape(validator.trim(req.body.insid));
-    }
+  var errors = [];
+  var validatedinsid;
+  await dbConnect();
 
-    if (errors.length > 0) {
-        res.status(500).json({ error: errors, status: 500 });
-        res.end();
-        return;
-    }
+  if (validator.isEmpty(validator.trim(req.body.insid))) {
+    errors.push(' The insid is empty');
+  } else {
+    validatedinsid = validator.escape(validator.trim(req.body.insid));
+  }
 
-    ItemInstance.findByIdAndRemove(validatedinsid)
-        .then((result) => {
-            console.log('delete result: ', result);
-            res.status(201).json({ status: 201, data: result });
-            res.end();
-        })
-        .catch((err) => {
-            res.status(500).json({ status: 500, error: err });
-            res.end();
-        });
+  if (errors.length > 0) {
+    res.status(500).json({ error: errors, status: 500 });
+    res.end();
+    return;
+  }
+
+  ItemInstance.findByIdAndRemove(validatedinsid)
+    .then((result) => {
+      res.status(201).json({ status: 201, data: result });
+      res.end();
+    })
+    .catch((err) => {
+      res.status(500).json({ status: 500, error: err });
+      res.end();
+    });
 }

@@ -12,7 +12,7 @@ export const config = {
 
 export default async function handler(req, res) {
   req.body = JSON.parse(req.body);
-  console.log('req.body: ', req.body);
+
   var errors = [];
   var validateduser;
   await dbConnect();
@@ -33,7 +33,6 @@ export default async function handler(req, res) {
   ItemInstance.find({ user: validateduser, status: 'Checkout' })
     .populate('item')
     .then((items_order) => {
-      //console.log('items_order in user_order_post: ', items_order);
       function groupBy(objectArray, property) {
         return objectArray.reduce(function (acc, obj) {
           let key = obj[property];
@@ -47,12 +46,6 @@ export default async function handler(req, res) {
       var groupeditems_order = Object.entries(
         groupBy(items_order, 'ordernumber')
       );
-      console.log(
-        'groupeditems_order in user_order_post: ',
-        groupeditems_order
-      );
-
-      // console.log('items_order: ', items_order);
 
       res.status(201).json({ status: 201, data: groupeditems_order });
       res.end();

@@ -1,5 +1,3 @@
-//import Head from 'next/head';
-//import styles from '../styles/Home.module.css';
 import { useEffect } from 'react';
 import dbConnect from '../utils/dbConnect';
 import Layout from '../components/layout';
@@ -7,17 +5,16 @@ import Item from '../models/item';
 import ItemsInIndex from '../components/itemsInIndex';
 import { useItemsDispatch } from './contexts/ProductsContext';
 import { useUserDispatch, useUser } from './contexts/userContext';
-import { useIns, useInsDispatch } from './contexts/CartContext';
+import { useInsDispatch } from './contexts/CartContext';
 import { usefunctions } from './contexts/functionContext';
 
 export default function Index({ items }) {
   var temp;
-  const { user, tmpuser } = useUser();
-  const { setUser, setTmpuser } = useUserDispatch();
+  const { user, isAuthenticated, tmpuser } = useUser();
+  const { setTmpuser } = useUserDispatch();
 
-  const { setItems, setItemsLen } = useItemsDispatch();
+  const { setItemsLen } = useItemsDispatch();
 
-  const { instances, inslen } = useIns();
   const { setInstances, setInsLen, setItemCount, setTotal } = useInsDispatch();
 
   const { GetAllCarts } = usefunctions();
@@ -27,8 +24,9 @@ export default function Index({ items }) {
   }, [items]);
 
   useEffect(() => {
-    if (!user) {
+    if (!isAuthenticated) {
       //set user
+
       if (localStorage.getItem('key')) {
         temp = localStorage.getItem('key');
       } else {
@@ -43,14 +41,13 @@ export default function Index({ items }) {
   }, [user, tmpuser]);
 
   useEffect(() => {
-    var usr = user || tmpuser;
+    var usr = user?.username || tmpuser;
     usr && GetAllCarts(usr, setInstances, setInsLen, setItemCount, setTotal);
   }, [user, tmpuser]);
 
   return (
     <Layout>
-      {/* Create a card for each item */}
-      <div className='card-columns'>
+      <div className="card-columns">
         {items.map((item) => (
           <ItemsInIndex item={item} key={item._id} />
         ))}
@@ -60,7 +57,6 @@ export default function Index({ items }) {
 }
 /* Retrieves item(s) data from mongodb database  */
 export async function getStaticProps() {
-  //export async function getServerSideProps() {
   await dbConnect();
 
   // find all the data in our database

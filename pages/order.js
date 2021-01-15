@@ -39,13 +39,14 @@ export default function Order() {
   }, [user, tmpuser]);
 
   useEffect(() => {
-    (user || tmpuser) && GetAllOrder(user || tmpuser, setOrders);
+    var usr = user?.username || tmpuser;
+    usr && GetAllOrder(usr, setOrders);
   }, [user, tmpuser]);
 
   return (
     <Layout>
-      <div className='container-fluid mt-3'>
-        <div className='row'>
+      <div className="container-fluid mt-3">
+        <div className="row">
           <div className={chkmsg ? styles.fadein : styles.fadeout}>
             checkout success!
           </div>
@@ -63,13 +64,13 @@ export default function Order() {
                         {new Date(order.buy_date).toLocaleDateString()}{' '}
                         {new Date(order.buy_date).toLocaleTimeString()}
                       </div>
-                      <div className='row' key={order._id}>
-                        <div className='col-sm-2'>
+                      <div className="row" key={order._id}>
+                        <div className="col-sm-2">
                           <Link
-                            href='/store/[id]'
+                            href="/store/[id]"
                             as={`store/${order.item._id}`}
                           >
-                            <a className='btn btn-link btn-sm mr-2'>
+                            <a className="btn btn-link btn-sm mr-2">
                               <Image
                                 src={order.item.image[0]}
                                 height={70}
@@ -78,27 +79,27 @@ export default function Order() {
                             </a>
                           </Link>
                         </div>
-                        <div className='col-sm-2'>
+                        <div className="col-sm-2">
                           <Link
-                            href='/store/[id]'
+                            href="/store/[id]"
                             as={`store/${order.item._id}`}
                           >
                             <a className={styles.link}>{order.item.title}</a>
                           </Link>
                         </div>
-                        <div className='col-sm-2'>
+                        <div className="col-sm-1">
                           <span className={styles.key}>unit price </span>
                           {formatNumber(order.item.price)}
                         </div>
-                        <div className='col-sm-2'>
+                        <div className="col-sm-1">
                           <span className={styles.key}>quantity</span>{' '}
                           {order.quantity}
                         </div>
-                        <div className='col-sm-2'>
+                        <div className="col-sm-1">
                           <span className={styles.key}>price </span>
                           {formatNumber(order.item.price * order.quantity)}
                         </div>
-                        <div className='col-sm-2'>
+                        <div className="col-sm-4">
                           <span className={styles.key}>comment</span>
                           <div className={styles.commentwrap}>
                             {order.commenttext}
