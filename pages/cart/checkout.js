@@ -12,13 +12,13 @@ export default function ToCheckOut() {
   var usr = user?.username || tmpuser;
   const router = useRouter();
 
-  const { instances, itemCount, total, orders } = useIns();
+  const { instances, itemCount, total } = useIns();
   const {
     setInstances,
     setInsLen,
     setItemCount,
     setTotal,
-    setOrders,
+ 
     setChkmsg,
   } = useInsDispatch();
   const { checkOut } = usefunctions();

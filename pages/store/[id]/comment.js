@@ -81,7 +81,7 @@ export default function Comment() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    var usr = user || tmpuser;
+    var usr = user?.username || tmpuser;
 
     PostComment(
       ins._id,

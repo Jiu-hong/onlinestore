@@ -74,9 +74,7 @@ const CustomImg = ({ smalls, zoomimg, count }) => {
   );
 };
 export default function Post({ item, commentsins }) {
-  const nextrouter = useRouter();
   var temp;
-  const { id } = nextrouter.query;
   const inputEL = useRef(null);
 
   const [incdis, setIncdis] = useState(false);
@@ -92,11 +90,11 @@ export default function Post({ item, commentsins }) {
   const [stylestab4, setStylestab4] = useState(styles.tab);
 
   const { user, tmpuser } = useUser();
-  const { setUser, setTmpuser } = useUserDispatch();
-  var usr = user || tmpuser;
+  const {  setTmpuser } = useUserDispatch();
+  var usr = user?.username || tmpuser;
 
   const { GetAllCarts, AddToCart } = usefunctions();
-  const { instances } = useIns();
+
   const { setInstances, setInsLen, setItemCount, setTotal } = useInsDispatch();
 
   const handleCount = (e) => {

@@ -13,8 +13,7 @@ import { formatNumber } from '../utils/utils';
 export default function Order() {
   var temp;
   const { user, tmpuser } = useUser();
-  var usr = user || tmpuser;
-  const { setUser, setTmpuser } = useUserDispatch();
+  const {  setTmpuser } = useUserDispatch();
 
   const { grouporders, chkmsg, cmtmsg } = useIns();
   // const { abled, msg } = cmtmsg;
