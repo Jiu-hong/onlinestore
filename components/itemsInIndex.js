@@ -27,7 +27,7 @@ export default function ItemsInIndex({ item }) {
           setInscount(instance.quantity);
         }
       });
-  }, [user, tmpuser]);
+  }, [instances,user, tmpuser]);
 
  
   var usr = user?.username || tmpuser;
