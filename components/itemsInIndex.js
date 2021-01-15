@@ -11,25 +11,25 @@ export default function ItemsInIndex({ item }) {
   //const { dispatch } = useInsDispatch();
   const { AddToCart } = usefunctions();
   const [busy, setBusy] = useState(false);
-  const [mgvisible, setMgvisible] = useState(false);
+ 
   const [inscount, setInscount] = useState('');
+  const { user,  tmpuser } = useUser();
 
   const divEL = useRef(null);
 
   const { setInstances, setInsLen, setItemCount, setTotal } = useInsDispatch();
-  const { itemCount, total, instances } = useIns();
+  const {  instances } = useIns();
 
   useEffect(() => {
-    console.log('I am in effect in itemindex.js');
     instances &&
       instances.find((instance) => {
         if (instance.item._id === item._id) {
           setInscount(instance.quantity);
         }
       });
-  }, [instances]);
+  }, [user, tmpuser]);
 
-  const { user, tmpuser } = useUser();
+ 
   var usr = user?.username || tmpuser;
 
   const handleIncrease = (e) => {
@@ -48,7 +48,7 @@ export default function ItemsInIndex({ item }) {
     ).then(() => {
       if (divEL.current) {
         setBusy(false);
-        setMgvisible(e);
+     
       }
     });
   };
