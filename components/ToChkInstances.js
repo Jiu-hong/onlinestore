@@ -11,7 +11,7 @@ export default function ToChkInstances({ checkedins }) {
                 <div>
                     <Link
                         href="/store/[id]"
-                        as={`store/${checkedins.item._id}`}
+                        as={`/store/${checkedins.item._id}`}
                     >
                         <a className="btn btn-link btn-sm mr-2">
                             <Image
@@ -25,7 +25,7 @@ export default function ToChkInstances({ checkedins }) {
                 <div>
                     <Link
                         href="/store/[id]"
-                        as={`store/${checkedins.item._id}`}
+                        as={`/store/${checkedins.item._id}`}
                     >
                         <a className="btn btn-link btn-sm  ">
                             {checkedins.item.title}
