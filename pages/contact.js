@@ -6,9 +6,7 @@ export default function About() {
       <div className="container">
         <p>Name: Jiuhong Sun</p>
 
-        <p>
-          Tel: <a href="tel:+86-18940960582">+86 18940960582</a>
-        </p>
+        <p>Tel: +86 18940960582</p>
         <p>
           Email:{' '}
           <a href="mailto:jiu.hong.sun@gmail.com">jiu.hong.sun@gmail.com</a>
