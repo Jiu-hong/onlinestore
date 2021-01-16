@@ -12,7 +12,7 @@ import { formatNumber } from '../utils/utils';
 
 export default function Order() {
   var temp;
-  const { user, tmpuser } = useUser();
+  const { user, isAuthenticated,tmpuser } = useUser();
   const {  setTmpuser } = useUserDispatch();
 
   const { grouporders, chkmsg, cmtmsg } = useIns();
@@ -21,7 +21,7 @@ export default function Order() {
   const { GetAllOrder } = usefunctions();
 
   useEffect(() => {
-    if (!user) {
+    if (!isAuthenticated) {
       //set user
       if (localStorage.getItem('key')) {
         temp = localStorage.getItem('key');
