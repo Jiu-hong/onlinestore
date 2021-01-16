@@ -44,6 +44,7 @@ export default async function handler(req, res) {
   ItemInstance.findByIdAndUpdate(validatedinsid, {
     commenttext: validatedcomment,
     commentimage: req.body.urls,
+    upload: true,
   })
     .populate('item')
     .then((items_comment) => {

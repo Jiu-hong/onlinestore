@@ -60,7 +60,7 @@ export default function Comment() {
   const { user, tmpuser } = useUser();
   const textEL = useRef(null);
   const imgEL = useRef(null);
-
+  const [uploaded, setUploaded] = useState(false);
   const { PostComment, GetAllOrder } = usefunctions();
 
   const { grouporders } = useIns();
@@ -81,7 +81,7 @@ export default function Comment() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    var usr = user?.username || tmpuser;
+    var usr = user || tmpuser;
 
     PostComment(
       ins._id,
@@ -129,7 +129,10 @@ export default function Comment() {
   const handleSubImg = (e) => {
     setUploadmg('loading...');
     setShow(false);
+
     e.preventDefault();
+    setUploaded(true);
+
     var fileArray = [];
     var imgurls = [];
 
@@ -170,6 +173,7 @@ export default function Comment() {
   useEffect(() => {
     setShow(false);
   }, []);
+
   return (
     <Layout>
       {ins && (
@@ -197,47 +201,62 @@ export default function Comment() {
             </div>
           )}
           <hr />
-          <form onSubmit={handleSubImg}>
-            <div className={styles.title}>
-              Image(s) preview.
-              <span className="ml-3"> {uploadmg}</span>
-            </div>
-            <p className="text-warning">
-              Please do Not exceed 3 files. Each file does Not exceed 1M.
-            </p>
-            {imgfiles.map((imgfile, index) => (
-              <TempImg1
-                key={index}
-                imgfile={imgfile}
-                flag={cflag}
-                i={index}
-                show={show}
-              />
-            ))}
-            <div className="custom-file">
-              <label className="custom-file-label">
-                Select image(s) for preview
-                <input
-                  ref={imgEL}
-                  onChange={handletmpimg}
-                  name="commentattach"
-                  type="file"
-                  className="file-control-file"
-                  hidden
-                  multiple
-                />
-              </label>
-              <p>click</p>
-              <div>
-                <button className="btn btn-success mr-3">Upload</button>
-                <span>
-                  {imgurlfordb.map((url) => (
-                    <img src={url} width={50} height={50} />
-                  ))}
-                </span>
+          {console.log('ins', ins)}
+          {console.log('uploaded: ', uploaded)}
+
+          {!ins.upload && (
+            <form onSubmit={handleSubImg}>
+              <div className={styles.title}>
+                Image(s) preview. (Upload can only be executed once.)
+                <span className="ml-3"> {uploadmg}</span>
               </div>
-            </div>
-          </form>
+
+              {imgfiles.map((imgfile, index) => (
+                <TempImg1
+                  key={index}
+                  imgfile={imgfile}
+                  flag={cflag}
+                  i={index}
+                  show={show}
+                />
+              ))}
+
+              <div className="custom-file">
+                {!uploaded && (
+                  <>
+                    <p>click</p>
+                    <label className="custom-file-label">
+                      Select image(s) for preview
+                      <input
+                        ref={imgEL}
+                        onChange={handletmpimg}
+                        name="commentattach"
+                        type="file"
+                        className="file-control-file"
+                        hidden
+                        multiple
+                      />
+                    </label>
+                    <p className="text-warning">
+                      Please do Not exceed 3 files. Each file does Not exceed
+                      1M.
+                    </p>
+                  </>
+                )}
+                <div>
+                  {!uploaded && (
+                    <button className="btn btn-success mr-3">Upload</button>
+                  )}
+                  <span>
+                    {imgurlfordb.map((url, index) => (
+                      <img key={index} src={url} width={50} height={50} />
+                    ))}
+                  </span>
+                </div>
+              </div>
+            </form>
+          )}
+
           <form
             //    ref={formEL}
             onSubmit={handleSubmit}
