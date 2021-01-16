@@ -7,7 +7,7 @@ export default function About() {
         <p>Name: Jiuhong Sun</p>
 
         <p>
-          Tel: <a href="tel:18940960582">+86 18940960582</a>
+          Tel: <a href="tel:+86-18940960582">+86 18940960582</a>
         </p>
         <p>
           Email:{' '}

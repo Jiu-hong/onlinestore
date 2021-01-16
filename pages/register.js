@@ -36,7 +36,7 @@ export default function Register() {
         },
       });
 
-      router.push('/welcome');
+      router.replace('/welcome');
     } catch (error) {
       setErrors(error.message);
     }
