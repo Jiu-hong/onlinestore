@@ -21,6 +21,7 @@ export default function ItemsInIndex({ item }) {
   const {  instances } = useIns();
 
   useEffect(() => {
+    setInscount('');
     instances &&
       instances.find((instance) => {
         if (instance.item._id === item._id) {
