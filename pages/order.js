@@ -103,18 +103,7 @@ export default function Order() {
                           <div className={styles.commentwrap}>
                             {order.commenttext}
                           </div>
-                          {order.commentimage && (
-                            <div>
-                              {order.commentimage.map((imgsrc, index) => (
-                                <img
-                                  key={index}
-                                  src={imgsrc}
-                                  height={50}
-                                  width={50}
-                                />
-                              ))}
-                            </div>
-                          )}
+                         
                           <Link
                             href={{
                               pathname: '/store/[id]/comment',

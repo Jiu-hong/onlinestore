@@ -1,67 +1,21 @@
 import Layout from '../../../components/layout';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import { useEffect, useRef, useState } from 'react';
+import {  useRef, useState } from 'react';
 import { useIns, useInsDispatch } from '../../contexts/CartContext';
 import { usefunctions } from '../../contexts/functionContext';
 import { useUser } from '../../contexts/userContext';
 import styles from '../../../styles/comment.module.css';
 import { formatNumber } from '../../../utils/utils';
 
-function TempImg1({ i, imgfile, flag, show }) {
-  const [sym, setSym] = useState(true);
-  const [dlt, setDlt] = useState(false);
-
-  useEffect(() => {
-    if (imgfile.size > 1048576) {
-      setDlt(true);
-      flag[i] = false;
-    } else {
-      setDlt(false);
-      flag[i] = true;
-    }
-    setSym(true);
-  }, [imgfile]);
-
-  var imgurl = URL.createObjectURL(imgfile);
-  URL.revokeObjectURL(imgfile);
-
-  const handledlt = (e) => {
-    e.preventDefault();
-    flag[i] = !flag[i];
-    setSym(flag[i]);
-  };
-  return (
-    <>
-      {show && dlt && (
-        <div className="mr-3">
-          <img src={imgurl} width={50} height={50} className="mr-3 mb-3" />
-          <span className="text-danger">size exceeded, it will not upload</span>
-        </div>
-      )}
-      {show && !dlt && (
-        <div className="mr-3">
-          <img src={imgurl} width={50} height={50} className="mr-3 mb-3" />
-
-          <button
-            className={sym ? 'btn btn-sm btn-success' : 'btn btn-sm btn-danger'}
-            onClick={handledlt}
-          >
-            {sym ? 'delete' : 'retain'}
-          </button>
-        </div>
-      )}
-    </>
-  );
-}
 
 export default function Comment() {
   const [error, setError] = useState([]);
   const { user, tmpuser } = useUser();
   const textEL = useRef(null);
-  const imgEL = useRef(null);
-  const [uploaded, setUploaded] = useState(false);
-  const { PostComment, GetAllOrder } = usefunctions();
+
+ 
+  const { PostComment } = usefunctions();
 
   const { grouporders } = useIns();
   const { setOrders, setCmtmsg } = useInsDispatch();
@@ -72,12 +26,7 @@ export default function Comment() {
     ins = JSON.parse(router.query.ins);
   }
 
-  const [cflag, setCflag] = useState([]);
-  const [imgfiles, setimgfiles] = useState([]);
-  const [uploadmg, setUploadmg] = useState('');
-  const [show, setShow] = useState(true);
-
-  const [imgurlfordb, setImgurlfordb] = useState([]);
+  const imgurlfordb = [];
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -106,78 +55,15 @@ export default function Comment() {
     });
   };
 
-  const handletmpimg = (e) => {
-    setImgurlfordb([]);
-    var length = e.target.files.length > 3 ? 3 : e.target.files.length;
-    var flag = [];
-    var img = [];
-    for (let i = 0; i < length; i++) {
-      flag.push(true);
-      img.push(e.target.files[i]);
-    }
-    setCflag(flag);
-    setimgfiles(img);
-    setUploadmg('');
-    setShow(true);
-  };
-
   const handleCancel = (e) => {
     e.preventDefault();
     router.back();
   };
 
-  const handleSubImg = (e) => {
-    setUploadmg('loading...');
-    setShow(false);
-
-    e.preventDefault();
-    setUploaded(true);
-
-    var fileArray = [];
-    var imgurls = [];
-
-    for (let i = 0; i < imgEL.current.files.length; i++) {
-      if (cflag[i]) {
-        fileArray.push(imgEL.current.files[i]);
-      }
-    }
-
-    fileArray.map((file) => {
-      const filename = encodeURIComponent(file.name);
-      fetch(`/api/upload-url?file=${filename}`)
-        .then((res) => res.json())
-        .then(({ url, fields }) => {
-          const formData = new FormData();
-
-          Object.entries({ ...fields, file }).forEach(([key, value]) => {
-            formData.append(key, value);
-          });
-
-          fetch(url, {
-            method: 'POST',
-            body: formData,
-          })
-            .then((result) => {
-              if (result.ok) {
-                imgurls.push(result.url + '/' + 'comment/' + file.name);
-                setImgurlfordb(imgurls);
-                if (fileArray.length === imgurls.length) {
-                  setUploadmg('upload successfully!');
-                }
-              }
-            })
-            .catch((err) => console.log('err: ', err));
-        });
-    });
-  };
-  useEffect(() => {
-    setShow(false);
-  }, []);
-
   return (
     <Layout>
       {ins && (
-        <div className="container-fluid mt-3">
+        <div className='container-fluid mt-3'>
           <div className={styles.gridcontainer}>
             <div>
               <Image src={ins.item.image[0]} height={70} width={70} />
@@ -193,91 +79,29 @@ export default function Comment() {
             <div>
               <div className={styles.oldtitle}>Original Comment</div>
               <div>{ins.commenttext}</div>
-              <div className="mt-3">
-                {ins.commentimage.map((imgfile, index) => (
-                  <img key={index} src={imgfile} height={50} width={50} />
-                ))}
-              </div>
             </div>
           )}
           <hr />
-          {console.log('ins', ins)}
-          {console.log('uploaded: ', uploaded)}
-
-          {!ins.upload && (
-            <form onSubmit={handleSubImg}>
-              <div className={styles.title}>
-                Image(s) preview. (Upload can only be executed once.)
-                <span className="ml-3"> {uploadmg}</span>
-              </div>
-
-              {imgfiles.map((imgfile, index) => (
-                <TempImg1
-                  key={index}
-                  imgfile={imgfile}
-                  flag={cflag}
-                  i={index}
-                  show={show}
-                />
-              ))}
-
-              <div className="custom-file">
-                {!uploaded && (
-                  <>
-                    <p>click</p>
-                    <label className="custom-file-label">
-                      Select image(s) for preview
-                      <input
-                        ref={imgEL}
-                        onChange={handletmpimg}
-                        name="commentattach"
-                        type="file"
-                        className="file-control-file"
-                        hidden
-                        multiple
-                      />
-                    </label>
-                    <p className="text-warning">
-                      Please do Not exceed 3 files. Each file does Not exceed
-                      1M.
-                    </p>
-                  </>
-                )}
-                <div>
-                  {!uploaded && (
-                    <button className="btn btn-success mr-3">Upload</button>
-                  )}
-                  <span>
-                    {imgurlfordb.map((url, index) => (
-                      <img key={index} src={url} width={50} height={50} />
-                    ))}
-                  </span>
-                </div>
-              </div>
-            </form>
-          )}
-
+          
           <form
-            //    ref={formEL}
             onSubmit={handleSubmit}
-            method="post"
-            //   encType='multipart/form-data'
+            method='post'
           >
             {error && <p style={{ color: 'red' }}>{error}</p>}
             <div className={styles.title}>New Comment (15-500 characters)</div>
 
             <textarea
-              name="textarea"
+              name='textarea'
               ref={textEL}
-              className="form-control mb-3 mt-3"
-              rows="5"
+              className='form-control mb-3 mt-3'
+              rows='5'
               required
-              minLength="15"
-              maxLength="500"
+              minLength='15'
+              maxLength='500'
             ></textarea>
 
-            <button className="btn btn-success mr-3">submit</button>
-            <button className="btn btn-warning mr-3" onClick={handleCancel}>
+            <button className='btn btn-success mr-3'>submit</button>
+            <button className='btn btn-warning mr-3' onClick={handleCancel}>
               cancel
             </button>
           </form>
